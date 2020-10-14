@@ -1,0 +1,34 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Table, Popconfirm, Button } from 'antd';
+
+const ProductList = (props) => {
+  console.log(props);
+  const columns = [{
+    title: 'Name',
+    dataIndex: 'name',
+  }, {
+    title: 'Actions',
+    render: (text, record) => {
+      return (
+        <Popconfirm title="Delete?" onConfirm={() => props.onDelete(record.id)}>
+          <Button>Delete</Button>
+        </Popconfirm>
+      );
+    },
+  }];
+  return (
+    <Table
+      dataSource={props.products}
+      columns={columns}
+      rowKey={(row)=>row.id}
+    />
+  );
+};
+
+ProductList.propTypes = {
+  onDelete: PropTypes.func.isRequired,
+  products: PropTypes.array.isRequired,
+};
+
+export default ProductList;
